@@ -1,0 +1,65 @@
+'use client'
+
+import { format } from 'date-fns'
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { cn } from '@/lib/utils'
+import { Calendar } from '@/components/ui/calendar'
+import { useDateRange } from '@/modules/search-input/context/dateRange'
+
+interface DateBoxProps {}
+
+const DateBox: React.FC<DateBoxProps> = () => {
+  const { date, setDate } = useDateRange()
+
+  return (
+    <div className={cn('grid gap-2')}>
+      <Popover>
+        <PopoverTrigger asChild>
+          <div className='flex gap-3 cursor-pointer'>
+            <div className='flex gap-3'>
+              <div className='border-r-[1px] pr-3'>
+                <DateBoxItem date={date?.from} />
+              </div>
+              <DateBoxItem date={date?.to} />
+            </div>
+          </div>
+        </PopoverTrigger>
+        <PopoverContent className='w-auto p-0' align='start'>
+          <Calendar
+            disabled={{ before: new Date() }}
+            initialFocus
+            mode='range'
+            defaultMonth={date?.from}
+            selected={date}
+            // @ts-ignore
+            onSelect={setDate}
+            numberOfMonths={2}
+          />
+        </PopoverContent>
+      </Popover>
+    </div>
+  )
+}
+
+const DateBoxItem = ({ date }: { date: Date | undefined }) => {
+  if (!date) date = new Date()
+
+  return (
+    <div className='flex gap-2 items-center'>
+      <div className='text-primary font-bold text-4xl'>
+        {format(date, 'dd')}
+      </div>
+      <div className='flex flex-col items-center justify-center gap-0'>
+        <div className='font-semibold'>{format(date, 'LLL')}</div>
+        <div className='text-sm uppercase'>{format(date, 'E')}</div>
+      </div>
+    </div>
+  )
+}
+
+export default DateBox
