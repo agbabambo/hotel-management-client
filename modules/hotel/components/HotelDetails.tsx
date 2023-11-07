@@ -7,6 +7,7 @@ import {
   Globe2Icon,
   GlobeIcon,
   KeyIcon,
+  LucideIcon,
   MapPinIcon,
   PhoneIcon,
   WeightIcon,
@@ -24,13 +25,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Hotel } from '@/modules/search/models/HotelModel'
+import { HotelVm } from '@/modules/search/models/HotelModel'
 import { getDistrict, getProvince, getWard } from '../services/AddressService'
 import ImageCarousel from '@/components/ui/image-carousel'
+import Image from 'next/image'
 
 interface HotelDetailsProps {
   children: React.ReactNode
-  hotel: Hotel
+  hotel: HotelVm
 }
 
 const GOOGLE_SEACH_URL = 'https://www.google.com/maps/place/'
@@ -66,9 +68,10 @@ const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
 
         <div className='grid grid-cols-5  items-center'>
           <div className='col-span-2 flex justify-center items-center flex-col gap-3'>
-            {/* TODO: smallest price */}
-            <div className='text-3xl font-bold'>$207</div>
-            <Button size='sm' className='px-8 text-xs'>
+            <div className='text-3xl font-bold'>
+              ${Math.min(...hotel.roomTypes.map((rt) => rt.price))}
+            </div>
+            <Button size='sm' className='px-8 text-xs' variant='teal'>
               View Rates
             </Button>
           </div>
@@ -112,7 +115,7 @@ const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
           </Link>
         </div>
 
-        <div className='flex flex-col justify-center items-center text-xs font-semibold'>
+        <div className='flex flex-col justify-center items-center text-xs font-semibold text-zinc-700'>
           <div>Rating: 4.5 out of 5.0</div>
           {/* TODO: change star icon */}
           <Rating numberOfStars={5} starDimension='22px' starSpacing='0px' />
@@ -128,7 +131,7 @@ const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
           <div className='text-xs text-zinc-500 font-semibold mb-3'>
             Description
           </div>
-          <div className='ml-4 text-xs'>{hotel.description}</div>
+          <div className='ml-4 text-xs font-light'>{hotel.description}</div>
         </div>
 
         <hr />
@@ -137,23 +140,25 @@ const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
           <div className='text-xs text-zinc-500 font-semibold mb-3'>
             Amenities
           </div>
-          <div className='ml-4 text-xs grid grid-cols-4'>
-            <div className='flex flex-col gap-2 justify-center items-center'>
-              <WifiIcon className='w-16 h-16 text-zinc-500' />
-              <div className='text-xs2 text-zinc-500'>Free Wifi</div>
-            </div>
-            <div className='flex flex-col gap-2 justify-center items-center'>
-              <GlobeIcon className='w-16 h-16 text-zinc-500' />
-              <div className='text-xs2 text-zinc-500'>Nothing</div>
-            </div>
-            <div className='flex flex-col gap-2 justify-center items-center'>
-              <KeyIcon className='w-16 h-16 text-zinc-500' />
-              <div className='text-xs2 text-zinc-500'>Digital Keys</div>
-            </div>
-            <div className='flex flex-col gap-2 justify-center items-center'>
-              <WeightIcon className='w-16 h-16 text-zinc-500' />
-              <div className='text-xs2 text-zinc-500'>Fitness center</div>
-            </div>
+          <div className='ml-4 text-xs grid grid-cols-4 gap-5'>
+            {hotel.amenity_Hotels.map((ah) => {
+              return (
+                <div
+                  className='flex flex-col gap-2 justify-center items-center'
+                  key={ah.amenity.id}
+                >
+                  <Image
+                    src={ah.amenity.image}
+                    alt='icon'
+                    width='30'
+                    height='30'
+                  />
+                  <div className='text-xs2 text-zinc-500'>
+                    {ah.amenity.name}I
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </DialogContent>

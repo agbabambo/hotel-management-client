@@ -2,9 +2,10 @@
 
 import Image from 'next/image'
 import { FC, useState } from 'react'
+import { Check, PercentIcon } from 'lucide-react'
+
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { Check, PercentIcon } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,76 +19,23 @@ import {
 import { RoomType } from '@/shared/types/RoomType'
 import { Discount } from '@/shared/types/Discount'
 import RoomDetails from './RoomDetails'
+import { HotelVm } from '@/modules/search/models/HotelModel'
 
 interface RoomProps {
   roomType: RoomType & { discount?: Discount | null }
   isSelected: boolean
   handleSelectRoom: (roomTypeId: string) => void
+  hotel: HotelVm
 }
 
 const RoomCard: FC<RoomProps> = ({
   roomType,
   handleSelectRoom,
   isSelected,
+  hotel,
 }) => {
-  const [open, setOpen] = useState(false)
-
   return (
     <>
-      {/* <AlertDialog open={open} onOpenChange={() => setOpen((o) => !o)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <div>
-              <Image
-                src={roomType.roomImgs[0]}
-                alt='sf'
-                width={0}
-                height={0}
-                sizes='100vw'
-                className='w-full h-56'
-              />
-
-              <div className='p-2 flex flex-col flex-1 justify-between'>
-                <h2 className='font-medium text-xl'>{roomType.name}</h2>
-                <div className='block'></div>
-                <div
-                  onClick={() => handleSelectRoom(roomType.id)}
-                  className={cn(buttonVariants(), 'flex justify-between py-5')}
-                >
-                  <h2 className='font-bold block text-xs xl:text-xl'>
-                    {isSelected ? 'Keep Room' : 'Select Room '}
-                  </h2>
-                  <div>
-                    <h2 className='font-bold block  text-sm xl:text-xl mr-2'>
-                      {roomType.discount
-                        ? `$ ${roomType.price} -> $ ${
-                            (roomType.price *
-                              (100 - roomType.discount.discountPercent)) /
-                            100
-                          }`
-                        : `$ ${roomType.price}`}
-                    </h2>
-                    {roomType.discount ? (
-                      <div className='text-xs flex'>
-                        {roomType.discount.name}{' '}
-                        {roomType.discount.discountPercent}
-                        <PercentIcon className='w-3 h-3' />
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={() => setOpen(false)}>
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog> */}
-
       <div
         className={cn(
           'relative border border-zinc-300 rounded-md overflow-hidden h-[350px] flex flex-col justify-between',
@@ -105,7 +53,7 @@ const RoomCard: FC<RoomProps> = ({
           <Check className='w-6 h-6' />
         </div>
         <Image
-          src={roomType.roomImgs[0]}
+          src={roomType.images[0]}
           alt='sf'
           width={0}
           height={0}
@@ -115,13 +63,11 @@ const RoomCard: FC<RoomProps> = ({
         <div className='p-2 flex flex-col flex-1 justify-between'>
           <h2 className='font-medium text-xl'>{roomType.name}</h2>
           <div className='block'>
-            <RoomDetails roomType={roomType}>
+            <RoomDetails roomType={roomType} hotel={hotel}>
               <Button
                 variant='link'
+                className='text-teal-600 text-xs'
                 size='sm'
-                onClick={() => {
-                  setOpen(true)
-                }}
               >
                 Room details &#62;
               </Button>
@@ -129,7 +75,10 @@ const RoomCard: FC<RoomProps> = ({
           </div>
           <div
             onClick={() => handleSelectRoom(roomType.id)}
-            className={cn(buttonVariants(), 'flex justify-between py-5')}
+            className={cn(
+              buttonVariants(),
+              'flex justify-between py-5 bg-teal-600 hover:bg-teal-600/90 cursor-pointer'
+            )}
           >
             <h2 className='font-bold block text-xs xl:text-xl'>
               {isSelected ? 'Keep Room' : 'Select Room '}

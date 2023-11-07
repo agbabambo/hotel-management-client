@@ -7,7 +7,7 @@ export type RoomType = {
   name: string
   description: string
   occupancy: number
-  roomImgs: string[]
+  images: string[]
   price: number
   maxBookingDay: number
   isArchived: boolean

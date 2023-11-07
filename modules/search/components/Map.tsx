@@ -6,7 +6,7 @@ import { Hotel } from '../models/HotelModel'
 import MapMarkerHotel from '@/components/map/MapMarkerHotels'
 
 interface MapProps {
-  hotels: Hotel[]
+  hotels?: Hotel[]
 }
 
 const Map: FC<MapProps> = ({ hotels }) => {

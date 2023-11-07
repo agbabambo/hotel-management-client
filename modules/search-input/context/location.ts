@@ -7,10 +7,10 @@ export type Location = {
 
 type ILocation = {
   location: Location
-  setLocation: (data: Location) => void
+  setLocation: (data?: Location) => void
 }
 
 export const useLocation = create<ILocation>((set) => ({
   location: { name: '', code: -1 },
-  setLocation: (data: Location) => set(() => ({ location: data })),
+  setLocation: (data?: Location) => set(() => ({ location: data })),
 }))

@@ -2,14 +2,14 @@
 
 import { FC, useState } from 'react'
 
-import { Hotel } from '../models/HotelModel'
+import { HotelVm } from '../models/HotelModel'
 import HotelItem from './HotelItem'
 import { useLocation } from '@/modules/search-input/context/location'
 import { Button } from '@/components/ui/button'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 
 interface SearchResultProps {
-  hotels: Hotel[]
+  hotels: HotelVm[]
 }
 
 const ITEM_PER_PAGE = 20
@@ -35,9 +35,9 @@ const SearchResult: FC<SearchResultProps> = ({ hotels }) => {
   }
 
   const renderPage = () => {
-    return Array.from({ length: endIdx - startIdx }).map((_, i) => (
-      <HotelItem key={i} hotel={hotels[i]} />
-    ))
+    return Array.from({ length: endIdx - startIdx }).map((_, i) => {
+      return <HotelItem key={i} hotel={hotels[i]} />
+    })
   }
 
   return (
@@ -57,7 +57,7 @@ const SearchResult: FC<SearchResultProps> = ({ hotels }) => {
           <ChevronLeftIcon className='w-4 h-4' />
         </Button>
         <div className='text-xs'>
-          Page {page + 1} of {hotels.length / 1}
+          Page {page + 1} of {Math.floor(hotels.length / ITEM_PER_PAGE) + 1}
         </div>
         <Button variant='link' onClick={handleClickNextPage}>
           <ChevronRightIcon className='w-4 h-4' />

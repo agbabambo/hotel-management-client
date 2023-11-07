@@ -1,6 +1,7 @@
 'use client'
 
 import { FC, useEffect, useState } from 'react'
+
 import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
 import ReservationSummary from './ReservationSummary'
@@ -11,45 +12,21 @@ import { useDateRange } from '@/modules/search-input/context/dateRange'
 import { useReservation } from '@/modules/search-input/context/reservation'
 import { checkDateRangeCollision } from '@/modules/search-input/utils/checkDateRangeCollision'
 import { renderPluralNumber } from '@/modules/search-input/utils/renderPluralNumber'
-import { RoomType } from '@/shared/types/RoomType'
-import { Room } from '@/shared/types/Room'
-import { Booking_Room } from '@/shared/types/Booking_Room'
-import { Discount } from '@/shared/types/Discount'
-import { Booking } from '@/shared/types/Booking'
-import { RoomTypeModel } from '../models/RoomTypeModel'
+import { HotelVm } from '@/modules/search/models/HotelModel'
+import { RoomTypeVm } from '../models/RoomTypeVm'
 
 interface ListRoomProps {
-  initialData: RoomTypeModel[]
+  roomTypes: RoomTypeVm[]
+  hotel: HotelVm
   userId: string
 }
 
-const mockAmenities = [
-  'Free WiFi',
-  'Non-smoking rooms',
-  'On-site restaurant',
-  'Outdoor pool',
-  'Fitness center',
-  'Pet-friendly rooms',
-]
-
-const ListRoom: FC<ListRoomProps> = ({ initialData, userId }) => {
+const ListRoom: FC<ListRoomProps> = ({ roomTypes, hotel, userId }) => {
   const dateRange = useDateRange()
   const reservation = useReservation()
 
   const [slide, setSlide] = useState<number>(1)
   const [isPayment, setIsPaymet] = useState(false)
-
-  const filteredRoomByDate = initialData.filter((rt) =>
-    rt.rooms.some((room) =>
-      room.booking_rooms.every(
-        ({ booking }) =>
-          !checkDateRangeCollision(
-            { from: booking.startDate, to: booking.endDate },
-            { from: dateRange.date.from, to: dateRange.date.to }
-          )
-      )
-    )
-  )
 
   useEffect(() => {
     const res =
@@ -87,22 +64,8 @@ const ListRoom: FC<ListRoomProps> = ({ initialData, userId }) => {
   }
 
   const renderRoom = () => {
-    const filteredRoomByDate = initialData.filter((rt) =>
-      rt.rooms.some((room) =>
-        room.booking_rooms.every(
-          ({ booking }) =>
-            !checkDateRangeCollision(
-              { from: booking.startDate, to: booking.endDate },
-              { from: dateRange.date.from!, to: dateRange.date.to! }
-            )
-        )
-      )
-    )
-
-    const filteredData = filteredRoomByDate
-
-    return filteredData.length > 0 ? (
-      filteredRoomByDate.map((roomType, i) => (
+    return roomTypes.length > 0 ? (
+      roomTypes.map((roomType, i) => (
         <div key={i} className=''>
           <RoomCard
             isSelected={
@@ -112,6 +75,7 @@ const ListRoom: FC<ListRoomProps> = ({ initialData, userId }) => {
             }
             handleSelectRoom={handleSelectRoom(reservation.rooms[slide - 1].id)}
             roomType={roomType}
+            hotel={hotel}
           />
         </div>
       ))
@@ -162,26 +126,29 @@ const ListRoom: FC<ListRoomProps> = ({ initialData, userId }) => {
               </ul>
 
               <div className='mt-2'>
-                <h2 className='font-bold'>
-                  Your stay with Hilton Garden Inn includes
-                </h2>
+                {hotel && (
+                  <h2 className='font-bold'>
+                    Your stay with {hotel.name} includes
+                  </h2>
+                )}
                 <ul className='flex gap-x-4 flex-wrap overflow-hidden'>
-                  {mockAmenities.map((a, i) => (
-                    <li className='text-sm text-zinc-600' key={i}>
-                      &#x2713; {a}
-                    </li>
-                  ))}
+                  {hotel &&
+                    hotel.amenity_Hotels.map((ah, i) => (
+                      <li className='text-sm text-zinc-600' key={i}>
+                        &#x2713; {ah.amenity.name}
+                      </li>
+                    ))}
                 </ul>
               </div>
             </div>
 
             {isPayment ? (
-              <Payment roomTypes={filteredRoomByDate} userId={userId} />
+              <Payment roomTypes={roomTypes} userId={userId} />
             ) : (
               <div className='flex flex-col gap-3'>
                 <p className='text-sm'>
                   {/* TODO: */}
-                  {renderPluralNumber(filteredRoomByDate.length, 'room')} found.
+                  {renderPluralNumber(roomTypes.length, 'room')} found.
                   We&apos;re showing the average price per night.
                 </p>
                 <hr />
@@ -192,7 +159,7 @@ const ListRoom: FC<ListRoomProps> = ({ initialData, userId }) => {
           </div>
         </div>
         <div className='w-[30%] block'>
-          <ReservationSummary slide={slide} roomTypes={filteredRoomByDate} />
+          <ReservationSummary slide={slide} roomTypes={roomTypes} />
         </div>
       </div>
     </div>

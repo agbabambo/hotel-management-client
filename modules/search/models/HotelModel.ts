@@ -1,23 +1,14 @@
-// model Hotel {
-//   id          String   @id @default(uuid())
-//   name        String
-//   description String
-//   images      String[]
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-//   isArchived  Boolean  @default(false)
-//   addressId String
-//   address   Address @relation(fields: [addressId], references: [id])
-//   rooms          Room[]
-//   amenity_Hotels Amenity_Hotel[]
-// }
-
+import { RoomType } from '@/shared/types/RoomType'
 import { Address } from './AddressModel'
+import { Amenity } from '@/shared/types/Amenity'
+import { AmenityHotel } from '@/shared/types/Amenity_Hotel'
 
-export type Hotel = {
+export type HotelVm = {
   id: string
   name: string
   description: string
   images: string[]
   address?: Address
+  roomTypes: RoomType[]
+  amenity_Hotels: (AmenityHotel & { amenity: Amenity })[]
 }

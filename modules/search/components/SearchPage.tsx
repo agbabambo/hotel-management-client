@@ -13,14 +13,14 @@ import { useFirstLoad } from '@/store/firstLoad'
 import SearchResult from '@/modules/search/components/SearchResult'
 import Map from '@/modules/search/components/Map'
 import { getHotels } from '@/modules/search/services/HotelService'
-import { Hotel } from '@/modules/search/models/HotelModel'
+import { HotelVm } from '@/modules/search/models/HotelModel'
 
 interface SearchPageProps {}
 
 const SearchPage: FC<SearchPageProps> = () => {
   const [open, setOpen] = useState<boolean>(false)
 
-  const [hotels, setHotels] = useState<Hotel[]>([])
+  const [hotels, setHotels] = useState<HotelVm[]>([])
 
   const firstLoad = useFirstLoad()
   const dateRange = useDateRange()
@@ -40,20 +40,21 @@ const SearchPage: FC<SearchPageProps> = () => {
   }, [firstLoad, dateRange, reservation, location, searchParams])
 
   useEffect(() => {
-    getHotels(location.location.name).then((res) => {
-      console.log('hotels', res)
+    if (location.location.code === -1) return
+
+    getHotels(location.location.code).then((res) => {
       setHotels(res)
     })
-  }, [])
+  }, [location])
 
   return (
     <div className='flex flex-col h-full'>
       <SearchInfo onOpen={() => setOpen((o) => !o)} />
       {open && <SearchBar onClose={() => setOpen(false)} />}
 
-      <hr className='h-1 bg-neutral-400 border-neutral-300 my-4 mx-6' />
+      <hr className='h-1 bg-teal-600 border-teal-600 my-4 mx-6' />
 
-      <div className='flex mx-6'>
+      <div className='flex mx-6 gap-4'>
         <SearchResult hotels={hotels} />
         <Map hotels={hotels} />
       </div>

@@ -1,10 +1,9 @@
 'use client'
 
 import { FC } from 'react'
-import Image from 'next/image'
 import Rating from 'react-star-ratings'
 
-import { Hotel } from '../models/HotelModel'
+import { HotelVm } from '../models/HotelModel'
 import { Button } from '@/components/ui/button'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import HotelDetails from '@/modules/hotel/components/HotelDetails'
@@ -12,9 +11,10 @@ import { useRouter } from 'next/navigation'
 import { useReservation } from '@/modules/search-input/context/reservation'
 import { useDateRange } from '@/modules/search-input/context/dateRange'
 import { objToQuery } from '@/lib/query'
+import ImageCarousel from '@/components/ui/image-carousel'
 
 interface HotelItemProps {
-  hotel: Hotel
+  hotel: HotelVm
 }
 
 const HotelItem: FC<HotelItemProps> = ({ hotel }) => {
@@ -38,12 +38,7 @@ const HotelItem: FC<HotelItemProps> = ({ hotel }) => {
     <div className='flex gap-3 py-3'>
       <div className='xl:w-[200px] w-1/3 h-full'>
         <AspectRatio ratio={16 / 9}>
-          <Image
-            src={hotel.images[0]}
-            alt='Hotel Image'
-            className='w-full h-full object-cover'
-            fill
-          />
+          <ImageCarousel images={hotel.images} />
         </AspectRatio>
       </div>
       <div className='flex-1'>
@@ -61,15 +56,29 @@ const HotelItem: FC<HotelItemProps> = ({ hotel }) => {
 
         <div className='flex justify-between'>
           <div>
-            <div className='text-xs font-bold'>Rating 4.0 out of 5.0d</div>
+            <div className='text-xs text-zinc-700 font-bold'>
+              Rating 4.0 out of 5.0d
+            </div>
             <Rating numberOfStars={5} starDimension='14px' starSpacing='0px' />
             <div className='text-xs text-neutral-500'>Based on 804 reviews</div>
           </div>
 
           <div className='flex flex-col justify-end'>
-            {/* TODO: well */}
-            <div className='font-bold text-lg text-right'>$165</div>
-            <Button className='text-xs' size='sm' onClick={handleClickVewRate}>
+            <div>
+              <div className='inline-block text-xs font-medium mr-2 text-zinc-400'>
+                Start from
+              </div>
+
+              <div className='inline-block font-bold text-right mb-2'>
+                ${Math.min(...hotel.roomTypes.map((rt) => rt.price))}
+              </div>
+            </div>
+            <Button
+              className='text-xs'
+              size='sm'
+              variant='teal'
+              onClick={handleClickVewRate}
+            >
               View Rates
             </Button>
           </div>

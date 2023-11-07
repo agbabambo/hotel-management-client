@@ -8,7 +8,7 @@ const Navbar = async () => {
   const session = await getAuthSession()
 
   return (
-    <div className='fixed top-0 h-14 bg-white inset-x-0 w-full border-b border-zind-300'>
+    <div className='fixed top-0 h-14 bg-white inset-x-0 w-full border-b border-zind-300 z-50'>
       <div className='container h-full z-10 py-2 max-w-7xl flex items-center justify-between'>
         <Link href='/'>
           <h1 className='font-extrabold text-xl border border-black p-2'>
