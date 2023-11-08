@@ -44,7 +44,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
       <DateBox />
       <RoomGuestBox />
 
-      <Button onClick={() => onSearch()}>Find room</Button>
+      <Button variant='teal' onClick={() => onSearch()}>
+        Find room
+      </Button>
       {onClose && (
         <button onClick={() => onClose()}>
           {/* <Icons.close2 width={32} height={32} fill='#008080' /> */}

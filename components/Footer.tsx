@@ -58,7 +58,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className='text-zinc-500 text-[0.6rem]'>
+        <div className='text-zinc-500 text-xs'>
           ©{new Date().getFullYear()} Winterfall
         </div>
       </div>

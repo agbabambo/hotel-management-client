@@ -51,7 +51,7 @@ const DateBoxItem = ({ date }: { date: Date | undefined }) => {
 
   return (
     <div className='flex gap-2 items-center'>
-      <div className='text-primary font-bold text-4xl'>
+      <div className='text-primary font-bold text-4xl text-teal-600'>
         {format(date, 'dd')}
       </div>
       <div className='flex flex-col items-center justify-center gap-0'>

@@ -32,7 +32,10 @@ const RoomDetails: FC<RoomDetailsProps> = ({ children, roomType, hotel }) => {
             <div className='text-xs w-full text-zinc-700'>
               {roomType.description}
             </div>
-            <Button className='w-full'>Book from ${roomType.price}</Button>
+            {/* TODO: add function */}
+            <Button className='w-full' variant='teal'>
+              Book from ${roomType.price}
+            </Button>
           </div>
         </div>
 

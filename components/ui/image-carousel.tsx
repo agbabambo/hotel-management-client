@@ -29,8 +29,8 @@ const ImageCarousel: FC<ImageCarouselProps> = ({ images }) => {
         <Image
           src={images[currentImage]}
           alt='Carousel Image'
-          width={100}
-          height={100}
+          width={400}
+          height={400}
           style={{ width: '100%', height: '100%' }}
         />
         <button

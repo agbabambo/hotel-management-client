@@ -7,7 +7,6 @@ import { HotelVm } from '../models/HotelModel'
 import { Button } from '@/components/ui/button'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import HotelDetails from '@/modules/hotel/components/HotelDetails'
-import { useRouter } from 'next/navigation'
 import { useReservation } from '@/modules/search-input/context/reservation'
 import { useDateRange } from '@/modules/search-input/context/dateRange'
 import { objToQuery } from '@/lib/query'
@@ -18,8 +17,6 @@ interface HotelItemProps {
 }
 
 const HotelItem: FC<HotelItemProps> = ({ hotel }) => {
-  const router = useRouter()
-
   const reservationInfo = useReservation()
   const dateRange = useDateRange()
 
@@ -31,7 +28,7 @@ const HotelItem: FC<HotelItemProps> = ({ hotel }) => {
       hotel: hotel.id,
     })
 
-    router.push(url)
+    window.open(url, '_blank')
   }
 
   return (
@@ -46,7 +43,7 @@ const HotelItem: FC<HotelItemProps> = ({ hotel }) => {
         <HotelDetails hotel={hotel}>
           <Button
             variant='link'
-            className='text-[0.6rem] text-teal-600'
+            className='text-xs text-teal-600'
             size='inline'
           >
             Hotel Details

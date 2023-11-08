@@ -21,22 +21,27 @@ interface ListRoomProps {
 }
 
 const ListRoom: FC<ListRoomProps> = ({ roomTypes, hotel, userId }) => {
+  const totalSlide = roomTypes.length + 1 // +1 payment slide
+
   const reservation = useReservation()
 
+  // remember slide start with 1 not 0
   const [slide, setSlide] = useState<number>(1)
   const [currentSlide, setCurrentSlide] = useState<number>(1)
 
   const [isPayable, setIsPayable] = useState(false)
 
-  useEffect(() => {
-    const res =
-      reservation.rooms.reduce((a, c) => (!c.roomTypeId ? a : a + 1), 0) ===
-      reservation.rooms.length
-    setIsPayable(res)
-  }, [reservation.rooms])
+  // useEffect(() => {
+  //   const res =
+  //     reservation.rooms.reduce((a, c) => (!c.roomTypeId ? a : a + 1), 0) ===
+  //     reservation.rooms.length
+  //   setIsPayable(res)
+  // }, [reservation.rooms])
 
+  // disable move next slide when current slide is reselect
   const onNext = () => {
-    if (slide === reservation.rooms.length) return
+    if (slide === totalSlide) return
+    if (slide + 1 === totalSlide) setIsPayable(true)
     setSlide((p) => p + 1)
   }
 
@@ -69,11 +74,9 @@ const ListRoom: FC<ListRoomProps> = ({ roomTypes, hotel, userId }) => {
         <div key={i} className=''>
           <RoomCard
             isSelected={
-              reservation.rooms[slide - 1].roomTypeId === roomType.id
-                ? true
-                : false
+              reservation.rooms[slide].roomTypeId === roomType.id ? true : false
             }
-            handleSelectRoom={handleSelectRoom(reservation.rooms[slide - 1].id)}
+            handleSelectRoom={handleSelectRoom(reservation.rooms[slide].id)}
             roomType={roomType}
             hotel={hotel}
           />
@@ -109,7 +112,7 @@ const ListRoom: FC<ListRoomProps> = ({ roomTypes, hotel, userId }) => {
               <h1 className='font-extrabold text-4xl'>Select a Room</h1>
               <Progress
                 className='h-1'
-                value={(slide / (reservation.rooms.length + 1)) * 100}
+                value={(slide / reservation.rooms.length) * 100}
               />
               <ul className='mt-3'>
                 {reservation.rooms.map((_, i) => (

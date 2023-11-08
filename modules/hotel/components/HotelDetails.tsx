@@ -84,7 +84,7 @@ const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
           >
             <div className='col-span-1 flex flex-col gap-3 justify-center items-center border-r-[1px]'>
               <MapPinIcon className='w-6 h-6 text-teal-600' />
-              <div className='text-xs2 text-teal-600'>
+              <div className='text-xs text-teal-600'>
                 Direction <CopyIcon className='w-2 h-2 inline-block' />
               </div>
             </div>
@@ -99,7 +99,7 @@ const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
           >
             <div className='col-span-1 flex flex-col gap-3 justify-center items-center border-r-[1px]'>
               <Globe2Icon className='w-6 h-6 text-teal-600' />
-              <div className='text-xs2 text-teal-600'>
+              <div className='text-xs text-teal-600'>
                 Visit Website <CopyIcon className='w-2 h-2 inline-block' />
               </div>
             </div>
@@ -108,7 +108,7 @@ const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
           <Link target='_blank' href={''}>
             <div className='col-span-1 flex flex-col gap-3 justify-center items-center'>
               <PhoneIcon className='w-6 h-6 text-teal-600' />
-              <div className='text-xs2 text-teal-600'>
+              <div className='text-xs text-teal-600'>
                 + {hotel.address?.phone}
               </div>
             </div>
@@ -153,7 +153,7 @@ const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
                     width='30'
                     height='30'
                   />
-                  <div className='text-xs2 text-zinc-500'>
+                  <div className='text-xs text-zinc-500 text-center'>
                     {ah.amenity.name}I
                   </div>
                 </div>
