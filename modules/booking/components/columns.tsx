@@ -9,8 +9,7 @@ export type Column = {
   startDate: string
   endDate: string
   roomName: string
-  price: number
-  createdAt: string
+  roomCharge: number
 }
 
 export const columns: ColumnDef<Column>[] = [
@@ -28,16 +27,10 @@ export const columns: ColumnDef<Column>[] = [
     header: 'End Date',
   },
   {
-    accessorKey: 'price',
-    header: 'Price',
-    cell: ({ row }) => <div className='text-bold'>$ {row.original.price}</div>,
-  },
-  {
-    accessorKey: 'createdAt',
-    header: 'Created Date',
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => <CellAction data={row.original} />,
+    accessorKey: 'roomCharge',
+    header: 'Room Charge',
+    cell: ({ row }) => (
+      <div className='text-bold'>$ {row.original.roomCharge}</div>
+    ),
   },
 ]

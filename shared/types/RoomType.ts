@@ -9,6 +9,7 @@ export type RoomType = {
   occupancy: number
   images: string[]
   price: number
+  hotelId: string
   maxBookingDay: number
   isArchived: boolean
   createdAt: Date

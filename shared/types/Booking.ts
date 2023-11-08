@@ -4,6 +4,8 @@ export type Booking = {
   id: string
   startDate: Date
   endDate: Date
+  roomCharge: number
+  paymentId: string
   numAdults: number
   numKids: number
   createdAt: Date

@@ -1,7 +1,6 @@
 'use client'
 
 import React, { FC } from 'react'
-import { GlobeIcon, KeyIcon, WeightIcon, WifiIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
@@ -17,6 +16,7 @@ interface RoomDetailsProps {
 }
 
 const RoomDetails: FC<RoomDetailsProps> = ({ children, roomType, hotel }) => {
+  // TODO: make fetch hotel only when open dialog
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>

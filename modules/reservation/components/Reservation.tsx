@@ -11,8 +11,7 @@ import { useDateRange } from '@/modules/search-input/context/dateRange'
 import { useReservation } from '@/modules/search-input/context/reservation'
 import { RoomTypeModel } from '@/modules/reservation/models/RoomTypeModel'
 import { useFirstLoad } from '@/store/firstLoad'
-import ListRoom from './ListRoom'
-import ListRoom2 from './ListRoom2'
+import SelectRoom from './SelectRoom'
 import { RoomType } from '@/shared/types/RoomType'
 import { getRoomTypes } from '../services/ReservationService'
 import { getHotel, getHotels } from '@/modules/search/services/HotelService'
@@ -69,7 +68,7 @@ const Reservation: FC<ReservationProps> = ({ userId }) => {
       <SearchInfo onOpen={() => setOpen((o) => !o)} />
       {open && <SearchBar onClose={() => setOpen(false)} />}
       <div className='h-full'>
-        <ListRoom2 userId={userId} roomTypes={roomTypes} hotel={hotel} />
+        <SelectRoom userId={userId} roomTypes={roomTypes} hotel={hotel} />
       </div>
     </div>
   )

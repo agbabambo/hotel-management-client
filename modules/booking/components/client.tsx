@@ -17,12 +17,12 @@ const Client: FC<ClientProps> = ({ data }) => {
           <h1 className='tracking-tight text-3xl font-semibold'>
             Booking ({data.length})
           </h1>
-          <p>Manage your booking room</p>
+          <p>List of all your booking</p>
         </div>
       </div>
 
       <hr className='my-6' />
-      <DataTable searchKey='roomName' columns={columns} data={data} />
+      <DataTable columns={columns} data={data} />
     </div>
   )
 }

@@ -11,6 +11,7 @@ export const getHotels = async (provinceCode: number): Promise<HotelVm[]> => {
 }
 
 // TODO: okay, soon
+// soon what? i forgot, damn
 export const getHotel = async (hotelId: string): Promise<HotelVm> => {
   const res = await axios.get('/api/hotels/' + hotelId)
 

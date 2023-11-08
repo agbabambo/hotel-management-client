@@ -1,21 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { Check, PercentIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
 import { RoomType } from '@/shared/types/RoomType'
 import { Discount } from '@/shared/types/Discount'
 import RoomDetails from './RoomDetails'
@@ -46,7 +36,7 @@ const RoomCard: FC<RoomProps> = ({
           className={cn(
             '',
             isSelected
-              ? 'absolute top-0 left-0 bg-primary text-white rounded-br-md'
+              ? 'absolute top-0 left-0 bg-teal-600 text-white rounded-br-md'
               : 'hidden'
           )}
         >

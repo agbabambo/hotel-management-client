@@ -28,7 +28,7 @@ const ReservationSummary: FC<ReservationSummaryProps> = ({
     }`
   }
 
-  const calTotalMoney = () => {
+  const calcTotalMoney = () => {
     let total = 0
     reservation.rooms.forEach((r) => {
       roomTypes.forEach((rt) => {
@@ -61,6 +61,7 @@ const ReservationSummary: FC<ReservationSummaryProps> = ({
           >
             <div className='flex flex-col gap-2'>
               <h2 className='font-bold text-sm'>Room {i + 1}</h2>
+              <div></div>
               <div className='flex gap-3 text-sm text-zinc-600'>
                 <Icons.people2 width='24' height='24' />
                 <span>{renderPluralNumber(room.adults, 'adult')}</span>
@@ -68,14 +69,17 @@ const ReservationSummary: FC<ReservationSummaryProps> = ({
               </div>
             </div>
 
-            <div>{renderPrice(room.roomTypeId)}</div>
+            <div className='font-semibold text-sm'>
+              {renderPrice(room.roomTypeId)}
+            </div>
           </div>
+
           <hr />
         </div>
       ))}
       <div className='flex justify-between p-4'>
         <h2 className='font-bold text-sm'>Total for stay:</h2>
-        <h2 className='font-bold text-sm'>${calTotalMoney()}</h2>
+        <h2 className='font-bold text-sm'>$ {calcTotalMoney()}</h2>
       </div>
     </div>
   )
