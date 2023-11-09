@@ -1,26 +1,38 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { User as UserAuth } from 'next-auth'
+import Link from 'next/link'
+import { signOut } from 'next-auth/react'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
-import { User } from 'next-auth'
+} from '@/components/ui/dropdown-menu'
+import { User } from '@/shared/types/User'
+import { getUser } from '../services/getUser'
 import UserAvatar from './UserAvatar'
-import Link from 'next/link'
-import { signOut } from 'next-auth/react'
+import { LogOutIcon } from 'lucide-react'
 
 interface UserAccountNavProps {
-  user: User
+  userAuth: UserAuth
 }
 
-const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
+const UserAccountNav: FC<UserAccountNavProps> = ({ userAuth }) => {
+  const [user, setUser] = useState<User>()
+
+  useEffect(() => {
+    getUser(userAuth.id).then((data) => setUser(data))
+  }, [userAuth])
+
+  if (!user) return
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className='outline-none'>
         <UserAvatar
           className='h-8 w-8'
           user={{ name: user.name || null, image: user.image || null }}
@@ -39,17 +51,17 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
         </div>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem asChild>
-          <Link href={`/${user.id}/profile`}>Profiles</Link>
+        <DropdownMenuItem asChild className='cursor-pointer'>
+          <Link href={`/user/profile`}>Profiles</Link>
         </DropdownMenuItem>
 
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href={`/${user.id}/booking`}>Booking Rooms</Link>
+        <DropdownMenuItem asChild className='cursor-pointer'>
+          <Link href={`/user/booking`}>Booking</Link>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
 
         <DropdownMenuItem
-          className='cursor-pointer'
+          className='cursor-pointer bg-red-400 text-white focus:bg-red-500/60 focus:text-white'
           onSelect={(e) => {
             e.preventDefault()
             signOut({
@@ -58,6 +70,7 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
           }}
         >
           Sign out
+          <LogOutIcon className='w-3 h-3 text-white ml-auto mr-2' />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

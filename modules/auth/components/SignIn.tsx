@@ -51,7 +51,7 @@ const SignIn = () => {
     } catch (err) {
       toast({
         title: 'Error',
-        description: 'Something went wrong , please try again.',
+        description: 'Something went wrong, please try again.',
         variant: 'destructive',
       })
     } finally {

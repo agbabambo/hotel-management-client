@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-import UserAccountNav from '@/components/UserAccountNav'
 import { buttonVariants } from '@/components/ui/button'
 import { getAuthSession } from '@/lib/auth'
+import UserAccountNav from '@/modules/user/components/UserAccountNav'
 
 const Navbar = async () => {
   const session = await getAuthSession()
@@ -17,7 +17,7 @@ const Navbar = async () => {
         </Link>
 
         {session?.user ? (
-          <UserAccountNav user={session.user} />
+          <UserAccountNav userAuth={session.user} />
         ) : (
           <div className='flex gap-4 items-center'>
             <Link href='/sign-up' className={buttonVariants({ size: 'sm' })}>

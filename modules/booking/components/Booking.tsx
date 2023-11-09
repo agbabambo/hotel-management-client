@@ -20,11 +20,9 @@ const Booking: FC<BookingProps> = ({ userId }) => {
     })
   }, [userId])
 
-  console.log(bookings)
   if (!bookings) return
 
   const formattedBookings: Column[] = bookings.map((item) => {
-    console.log(item)
     return {
       id: item.id,
       startDate: format(new Date(item.startDate), 'MMMM do, yyyy'),
@@ -37,7 +35,7 @@ const Booking: FC<BookingProps> = ({ userId }) => {
   if (!userId) return
 
   return (
-    <div className='container p-10 mt-14'>
+    <div>
       <Client data={formattedBookings} />
     </div>
   )

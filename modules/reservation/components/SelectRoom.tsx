@@ -48,7 +48,6 @@ const SelectRoom: FC<ListRoomProps> = ({ roomTypes, hotel, userId }) => {
   }
 
   const renderRoom = () => {
-    console.log(reservation)
     const selectedRoom = roomTypes.find(
       (rt) => rt.id === reservation.rooms[slide - 1].roomTypeId
     )
