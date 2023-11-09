@@ -5,11 +5,10 @@ import { useParams, useSearchParams } from 'next/navigation'
 
 import * as queryConvert from '@/lib/query'
 import SearchInfo from '@/modules/search-input/components/SearchInfo'
-import SearchBar from '@/modules/search-input/components/searchBar'
+import SearchBar from '@/modules/search-input/components/searchBar/SearchBar'
 import { useLocation } from '@/modules/search-input/context/location'
 import { useDateRange } from '@/modules/search-input/context/dateRange'
 import { useReservation } from '@/modules/search-input/context/reservation'
-import { RoomTypeModel } from '@/modules/reservation/models/RoomTypeModel'
 import { useFirstLoad } from '@/store/firstLoad'
 import SelectRoom from './SelectRoom'
 import { RoomType } from '@/shared/types/RoomType'
@@ -66,7 +65,7 @@ const Reservation: FC<ReservationProps> = ({ userId }) => {
   return (
     <div className='flex flex-col h-full'>
       <SearchInfo onOpen={() => setOpen((o) => !o)} />
-      {open && <SearchBar onClose={() => setOpen(false)} />}
+      {open && <SearchBar variant='SEARCHED' onClose={() => setOpen(false)} />}
       <div className='h-full'>
         <SelectRoom userId={userId} roomTypes={roomTypes} hotel={hotel} />
       </div>

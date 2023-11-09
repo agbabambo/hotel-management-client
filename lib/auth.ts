@@ -7,10 +7,7 @@ export const getAuthSession = () =>
       async session({ token, session }) {
         if (token) {
           session.user.id = token.id
-          session.user.role = token.role
           session.user.name = token.name
-          session.user.picture = token.picture
-          session.user.email = token.email
         }
         return session
       },

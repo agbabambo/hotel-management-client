@@ -1,14 +1,15 @@
 'use client'
 
-import { Icons } from '@/components/Icons'
-import Link from 'next/link'
 import { useState } from 'react'
+import Link from 'next/link'
 import { signIn } from 'next-auth/react'
-import { cn } from '@/lib/utils'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+
+import { Icons } from '@/components/Icons'
+import { cn } from '@/lib/utils'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from '@/components/ui/use-toast'
 import {
   Form,
@@ -67,7 +68,6 @@ const SignIn = () => {
         email: data.email,
         password: data.password,
       })
-      toast({ title: 'Logged in' })
       router.push('/')
       router.refresh()
     } catch (err: any) {
@@ -125,7 +125,7 @@ const SignIn = () => {
             <Button
               disabled={loading}
               size='sm'
-              className={cn(buttonVariants({}), 'mt-4')}
+              className={cn(buttonVariants({ variant: 'teal' }), 'mt-4')}
             >
               Sign In
             </Button>
@@ -136,7 +136,7 @@ const SignIn = () => {
             <Button
               disabled={loading}
               size='sm'
-              className='w-full'
+              className='w-full text-teal-600 bg-white border-2 border-teal-600 hover:bg-zinc-200'
               onClick={() => loginWithGoogle()}
             >
               {loading ? null : <Icons.google className='w-6 h-6 mr-2' />}
@@ -144,10 +144,13 @@ const SignIn = () => {
             </Button>
 
             <p className='px-8 text-center text-sm text-muted-foreground'>
-              Dont have an account?{' '}
+              Dont have an account?
               <Link
                 href='/sign-up'
-                className={cn(buttonVariants({ variant: 'link' }))}
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'text-teal-600'
+                )}
               >
                 Sign Up
               </Link>

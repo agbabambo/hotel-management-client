@@ -5,12 +5,12 @@ export type Location = {
   code: number
 }
 
-type ILocation = {
+export type StoreLocation = {
   location: Location
   setLocation: (data?: Location) => void
 }
 
-export const useLocation = create<ILocation>((set) => ({
+export const useLocation = create<StoreLocation>((set) => ({
   location: { name: '', code: -1 },
   setLocation: (data?: Location) => set(() => ({ location: data })),
 }))

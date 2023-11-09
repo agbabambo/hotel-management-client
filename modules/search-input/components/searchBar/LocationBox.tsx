@@ -12,67 +12,59 @@ import {
 } from '@/components/ui/popover'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useOnClickOutside } from '@/hooks/useOnClickOutside'
-import { useLocation } from '@/modules/search-input/context/location'
-import { RotateCw } from 'lucide-react'
+import {
+  StoreLocation,
+  useLocation,
+} from '@/modules/search-input/context/location'
+import * as AddressService from '@/modules/hotel/services/AddressService'
 
 const PROVINCE_API_URL = 'https://provinces.open-api.vn/api/p/search/?q='
 
-interface LocationBoxProps {}
+interface LocationBoxProps {
+  setIsTyping: (val: boolean) => void
+}
 
 type Province = {
   name: string
   code: number
 }
 
-const LocationBox: React.FC<LocationBoxProps> = () => {
-  // am i a stupid?
-  const { location, setLocation } = useLocation()
-  const debouncedInput = useDebounce<string>(location.name, 500)
-  const [open, setOpen] = useState<boolean>(false)
-  // fix Input lost focus when Popover popup
-  const [isFocused, setIsFocused] = useState<boolean>(false)
-  const [fetchedData, setFetchedData] = useState<Province[]>([])
-  const [selectedProvince, setSelectedProvince] = useState<Province>({
-    name: '',
-    code: -1,
-  })
+const LocationBox: React.FC<LocationBoxProps> = ({ setIsTyping }) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const popoverRef = useRef<HTMLDivElement>(null)
 
-  const handleClickOutside = () => {
-    setOpen(false)
-  }
+  const { location, setLocation } = useLocation()
 
-  const handleFocus = () => {
-    setIsFocused(true)
-  }
+  const [comLocation, setComLocation] = useState<string>(location.name)
+  const [open, setOpen] = useState<boolean>(false)
+  const [provinces, setProvinces] = useState<Province[]>([])
 
-  const handleBlur = () => {
-    setIsFocused(false)
-  }
+  const debouncedInput = useDebounce<string>(comLocation, 250)
+
+  // TODO: Input lost focus when Popover popup, still not efficient, fix later
+  const [isFocused, setIsFocused] = useState<boolean>(false)
 
   const onSelect = (province: Province) => {
     setLocation(province)
-    setSelectedProvince(province)
+    setComLocation(province.name)
     setOpen(false)
   }
 
-  useOnClickOutside(popoverRef, handleClickOutside)
+  useOnClickOutside(popoverRef, () => {
+    setOpen(false)
+  })
 
   useEffect(() => {
-    const getData = async () => {
-      const data = (await axios.get(PROVINCE_API_URL + debouncedInput)).data
-      setFetchedData(data)
-      setOpen(true)
-      setTimeout(() => {
-        inputRef.current?.focus()
-      }, 10)
+    if (isFocused && debouncedInput.length !== 0) {
+      AddressService.searchProvinces(debouncedInput).then((data) => {
+        setProvinces(data)
+        setOpen(true)
+        setTimeout(() => {
+          inputRef.current?.focus()
+        }, 10)
+      })
     }
-
-    if (isFocused && location.name.length !== 0) {
-      getData()
-    }
-  }, [isFocused, debouncedInput, inputRef, location])
+  }, [isFocused, debouncedInput, inputRef])
 
   return (
     <Popover open={open}>
@@ -80,16 +72,20 @@ const LocationBox: React.FC<LocationBoxProps> = () => {
         <Input
           placeholder='Search for a location'
           ref={inputRef}
-          value={location.name}
-          onChange={(e) => setLocation({ name: e.target.value, code: -1 })}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          value={comLocation}
+          onChange={(e) => {
+            setIsTyping(true)
+            setComLocation(e.target.value)
+            setLocation({ name: '', code: -1 })
+          }}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
         />
       </PopoverTrigger>
       <PopoverContent>
         <div ref={popoverRef}>
-          {fetchedData.length !== 0 ? (
-            fetchedData.map((province) => (
+          {provinces.length !== 0 ? (
+            provinces.map((province) => (
               <Button
                 key={province.code}
                 className='w-full justify-start'

@@ -58,8 +58,6 @@ const Profile: FC<ProfileProps> = ({ userAuth }) => {
 
       setUser(data)
 
-      // change in user didn't affect useForm
-      // i have to change it mannualy
       form.reset({
         email: data.email,
         firstName: data.firstName,

@@ -4,11 +4,12 @@ import { FC, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from '@/components/ui/use-toast'
 import { signIn } from 'next-auth/react'
 import axios from 'axios'
 import Link from 'next/link'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
 import {
   Form,
@@ -94,7 +95,6 @@ const SignUp: FC<SignUpProps> = ({}) => {
         address: data.address,
         phoneNumber: data.phoneNumber,
       })
-      toast({ title: 'Account created' })
       router.push('/sign-in')
       router.refresh()
     } catch (err: any) {
@@ -252,8 +252,7 @@ const SignUp: FC<SignUpProps> = ({}) => {
             <Button
               disabled={loading}
               size='sm'
-              className={cn(buttonVariants(), 'col-span-4')}
-              type='submit'
+              className={cn(buttonVariants({ variant: 'teal' }), 'col-span-4')}
             >
               Create
             </Button>
@@ -265,7 +264,7 @@ const SignUp: FC<SignUpProps> = ({}) => {
       <Button
         disabled={loading}
         size='sm'
-        className='w-full'
+        className='w-full text-teal-600 bg-white border-2 border-teal-600 hover:bg-zinc-200'
         onClick={() => loginWithGoogle()}
       >
         {loading ? null : <Icons.google className='w-6 h-6 mr-2' />}
@@ -276,7 +275,7 @@ const SignUp: FC<SignUpProps> = ({}) => {
         Already have an account?{' '}
         <Link
           href='/sign-in'
-          className={cn(buttonVariants({ variant: 'link' }))}
+          className={cn(buttonVariants({ variant: 'link' }), 'text-teal-600')}
         >
           Login
         </Link>

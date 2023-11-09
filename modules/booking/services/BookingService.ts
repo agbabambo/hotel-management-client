@@ -4,7 +4,7 @@ import { BookingVm } from '../models/BookingModel'
 export async function getCurrentUserBooking(
   userId: string
 ): Promise<BookingVm[]> {
-  const res = await axios.get('/bookings?userId=' + userId)
+  const res = await axios.get('/api/bookings?userId=' + userId)
 
   if (res.status >= 200 && res.status < 300) return res.data
 
