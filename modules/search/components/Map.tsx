@@ -2,11 +2,11 @@
 
 import { FC } from 'react'
 
-import { Hotel } from '../models/HotelModel'
 import MapMarkerHotel from '@/components/map/MapMarkerHotels'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
 
 interface MapProps {
-  hotels?: Hotel[]
+  hotels: HotelVm[]
 }
 
 const Map: FC<MapProps> = ({ hotels }) => {

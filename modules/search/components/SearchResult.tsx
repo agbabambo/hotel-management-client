@@ -1,12 +1,12 @@
 'use client'
 
 import { FC, useState } from 'react'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 
-import { HotelVm } from '../models/HotelModel'
 import HotelItem from './HotelItem'
 import { useLocation } from '@/modules/search-input/context/location'
 import { Button } from '@/components/ui/button'
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
 
 interface SearchResultProps {
   hotels: HotelVm[]

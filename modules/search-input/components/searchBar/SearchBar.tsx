@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { XCircleIcon } from 'lucide-react'
 
@@ -11,7 +12,6 @@ import { objToQuery } from '@/lib/query'
 import LocationBox from './LocationBox'
 import DateBox from './DateBox'
 import RoomGuestBox from './RoomGuestBox'
-import { useState } from 'react'
 
 interface SearchBarProps {
   onClose?: () => void
@@ -26,15 +26,17 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose, variant }) => {
   const location = useLocation()
 
   // TODO: yeah
-  const [isTyping, setIsTyping] = useState<boolean>(false)
-
-  const [warn, setWarn] = useState<boolean>(location.location.name === '')
+  const [isTyped, setIsTyped] = useState<boolean>(true)
+  const [isCorrectDate, setIsCorrectDate] = useState<boolean>(true)
 
   const onSearch = () => {
+    // handle field message
     if (location.location.name === '' || location.location.code === -1) {
-      // setWarn(true)
+      setIsTyped(false)
       return
     }
+
+    if (!isCorrectDate) return
 
     const url = objToQuery({
       baseUrl: '/search',
@@ -61,17 +63,25 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose, variant }) => {
         )}
       </div>
 
-      <LocationBox setIsTyping={setIsTyping} />
-      <DateBox />
+      <LocationBox setIsTyped={setIsTyped} />
+      <DateBox setIsCorrectDate={setIsCorrectDate} />
       <RoomGuestBox />
 
       <Button variant='teal' onClick={() => onSearch()}>
         Find room
       </Button>
 
-      {warn && (
-        <div className='text-red-500 text-xs'>Please enter a Location</div>
-      )}
+      {/* TODO: improve the UX later */}
+      <div>
+        {location.location.code === -1 && !isTyped && (
+          <div className='text-red-500 text-xs'>Please enter a Location</div>
+        )}
+        {!isCorrectDate && (
+          <div className='text-red-500 text-xs'>
+            Please choose a correct date
+          </div>
+        )}
+      </div>
 
       {variant === 'SEARCHED' && onClose && (
         <button onClick={() => onClose()}>

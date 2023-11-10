@@ -1,5 +1,5 @@
 import axios from '@/lib/axios'
-import { BookingVm } from '../models/BookingModel'
+import { BookingVm } from '@/modules/booking/models/BookingModel'
 
 export async function getCurrentUserBooking(
   userId: string

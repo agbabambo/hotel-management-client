@@ -1,27 +1,25 @@
 'use client'
 
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 
 import { Progress } from '@/components/ui/progress'
-import { Button } from '@/components/ui/button'
 import ReservationSummary from './ReservationSummary'
 import RoomCard from './RoomCard'
-import { cn } from '@/lib/utils'
 import Payment from './Payment'
 import { useReservation } from '@/modules/search-input/context/reservation'
 import { renderPluralNumber } from '@/modules/search-input/utils/renderPluralNumber'
-import { HotelVm } from '@/modules/search/models/HotelModel'
-import { RoomTypeVm } from '../models/RoomTypeVm'
+import { RoomTypeVm } from '@/modules/reservation/models/RoomTypeVm'
 import HotelInfo from './HotelInfo'
 import SlideInfo from './SlideInfo'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
 
-interface ListRoomProps {
+interface SelectRoomProps {
   roomTypes: RoomTypeVm[]
-  hotel: HotelVm
+  hotel?: HotelVm
   userId: string
 }
 
-const SelectRoom: FC<ListRoomProps> = ({ roomTypes, hotel, userId }) => {
+const SelectRoom: FC<SelectRoomProps> = ({ roomTypes, hotel, userId }) => {
   const reservation = useReservation()
   const [slide, setSlide] = useState<number>(1)
   const [isPayable, setIsPayable] = useState(false)

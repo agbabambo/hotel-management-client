@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { cn } from '@/lib/utils'
-import { Icons } from '@/components/Icons'
 import { RoomType } from '@/shared/types/RoomType'
 import { Discount } from '@/shared/types/Discount'
 import { useReservation } from '@/modules/search-input/context/reservation'
 import { renderPluralNumber } from '@/modules/search-input/utils/renderPluralNumber'
+import { PeopleIcon } from '@/components/icons/svg/PeopleIcon'
 
 interface ReservationSummaryProps {
   slide: number
@@ -63,7 +63,7 @@ const ReservationSummary: FC<ReservationSummaryProps> = ({
               <h2 className='font-bold text-sm'>Room {i + 1}</h2>
               <div></div>
               <div className='flex gap-3 text-sm text-zinc-600'>
-                <Icons.people2 width='24' height='24' />
+                <PeopleIcon width='24' height='24' />
                 <span>{renderPluralNumber(room.adults, 'adult')}</span>
                 <span>{renderPluralNumber(room.kids, 'kid')}</span>
               </div>

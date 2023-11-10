@@ -1,6 +1,7 @@
 'use client'
 
 import { v4 as uuid } from 'uuid'
+import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -9,16 +10,21 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
-import { Icons } from '@/components/Icons'
 import { renderPluralNumber } from '@/modules/search-input/utils/renderPluralNumber'
 import { RoomReservationInfo } from '@/modules/search-input/models/RoomReservation'
-import { useReservation } from '@/modules/search-input/context/reservation'
+import {
+  IRoom,
+  useReservation,
+} from '@/modules/search-input/context/reservation'
 import RoomCountItem from './RoomCountItem'
+import { PlusIcon } from '@/components/icons/svg/PlusIcon'
 
 interface RoomGuestBoxProps {}
 
 const RoomGuestBox: React.FC<RoomGuestBoxProps> = () => {
-  const { rooms, setRooms } = useReservation()
+  const storeReservation = useReservation()
+
+  const [rooms, setRooms] = useState<IRoom[]>(storeReservation.rooms)
 
   const handleRoomChange = (room: RoomReservationInfo): void => {
     let newData = [...rooms]
@@ -42,8 +48,12 @@ const RoomGuestBox: React.FC<RoomGuestBoxProps> = () => {
     setRooms(newData)
   }
 
+  const onPopoverChange = (open: boolean) => {
+    if (open === false) storeReservation.setRooms(rooms)
+  }
+
   return (
-    <Popover>
+    <Popover onOpenChange={onPopoverChange}>
       <PopoverTrigger asChild>
         <Button variant='outline' className='text-xs'>
           {renderPluralNumber(rooms.length, 'room')},{' '}
@@ -82,7 +92,7 @@ const RoomGuestBox: React.FC<RoomGuestBoxProps> = () => {
             className='flex gap-2 cursor-pointer'
             onClick={() => handleAddRoom()}
           >
-            <Icons.plus width={20} height={20} fill='#94a3b8' />
+            <PlusIcon width={20} height={20} fill='#94a3b8' />
             <p className='font-medium text-sm text-left'>Add room</p>
           </div>
         </div>

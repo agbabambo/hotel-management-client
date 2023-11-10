@@ -1,5 +1,3 @@
-import { RoomType } from './RoomType'
-
 export type Discount = {
   id: string
   name: string
@@ -9,6 +7,4 @@ export type Discount = {
   endDate: Date
   createdAt: Date
   updatedAt: Date
-
-  roomTypes: RoomType[]
 }

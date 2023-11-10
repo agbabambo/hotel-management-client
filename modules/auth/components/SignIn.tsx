@@ -7,7 +7,6 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
-import { Icons } from '@/components/Icons'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from '@/components/ui/use-toast'
@@ -21,6 +20,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { GoogleIcon } from '@/components/icons/svg/GoogleIcon'
 
 const formSchema = z.object({
   email: z.string().max(320).email(),
@@ -139,7 +139,7 @@ const SignIn = () => {
               className='w-full text-teal-600 bg-white border-2 border-teal-600 hover:bg-zinc-200'
               onClick={() => loginWithGoogle()}
             >
-              {loading ? null : <Icons.google className='w-6 h-6 mr-2' />}
+              {loading ? null : <GoogleIcon className='w-6 h-6 mr-2' />}
               Google
             </Button>
 

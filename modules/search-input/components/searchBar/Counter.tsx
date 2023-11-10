@@ -1,6 +1,7 @@
 'use client'
 
-import { Icons } from '@/components/Icons'
+import { MinusIcon } from '@/components/icons/svg/MinusIcon'
+import { PlusIcon } from '@/components/icons/svg/PlusIcon'
 
 interface CounterProps {
   title?: string
@@ -19,7 +20,6 @@ const Counter: React.FC<CounterProps> = ({
   value,
   label,
 }) => {
-  // FIXLATER: why use callback
   const onAdd = () => {
     if (value === max) return
     onChange(label, 'add')
@@ -38,7 +38,7 @@ const Counter: React.FC<CounterProps> = ({
           className={`${value > min ? 'cursor-pointer' : 'cursor-not-allowed'}`}
           onClick={onReduce}
         >
-          <Icons.minus width={20} fill={value > min ? '#020617' : '#94a3b8'} />
+          <MinusIcon width={20} fill={value > min ? '#020617' : '#94a3b8'} />
         </button>
         <div>{value}</div>
         <button
@@ -47,13 +47,12 @@ const Counter: React.FC<CounterProps> = ({
           } text-neutral-500`}
           onClick={onAdd}
         >
-          <Icons.plus width={20} fill={value !== max ? '#020617' : '#94a3b8'} />
+          <PlusIcon
+            width={20}
+            className='bg-white '
+            // fill={value !== max ? '#020617' : '#94a3b8'}
+          />
         </button>
-        {/* TODO: */}
-        {/* <div className="absolute text-xs top-0">
-          You've reached the maximum number of guests for a single room. Please
-          add another room.
-        </div> */}
       </div>
     </div>
   )

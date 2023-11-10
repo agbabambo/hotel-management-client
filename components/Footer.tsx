@@ -1,7 +1,7 @@
-import { CopyIcon } from 'lucide-react'
-import Link from 'next/link'
-import { Button } from './ui/button'
 import React from 'react'
+import { CopyIcon } from 'lucide-react'
+
+import { Button } from './ui/button'
 
 interface CustomLinkProps {
   text: string

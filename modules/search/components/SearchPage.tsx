@@ -9,11 +9,11 @@ import { useLocation } from '@/modules/search-input/context/location'
 import { useReservation } from '@/modules/search-input/context/reservation'
 import SearchInfo from '@/modules/search-input/components/SearchInfo'
 import SearchBar from '@/modules/search-input/components/searchBar/SearchBar'
-import { useFirstLoad } from '@/store/firstLoad'
 import SearchResult from '@/modules/search/components/SearchResult'
 import Map from '@/modules/search/components/Map'
-import { getHotels } from '@/modules/search/services/HotelService'
-import { HotelVm } from '@/modules/search/models/HotelModel'
+import { useFirstLoad } from '@/shared/store/useFirstLoad'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
+import * as HotelService from '@/modules/hotel/services/HotelService'
 
 interface SearchPageProps {}
 
@@ -42,7 +42,7 @@ const SearchPage: FC<SearchPageProps> = () => {
   useEffect(() => {
     if (location.location.code === -1) return
 
-    getHotels(location.location.code).then((res) => {
+    HotelService.getHotels(location.location.code).then((res) => {
       setHotels(res)
     })
   }, [location])
@@ -50,7 +50,7 @@ const SearchPage: FC<SearchPageProps> = () => {
   return (
     <div className='flex flex-col h-full'>
       <SearchInfo onOpen={() => setOpen((o) => !o)} />
-      {open && <SearchBar onClose={() => setOpen(false)} />}
+      {open && <SearchBar variant='SEARCHED' onClose={() => setOpen(false)} />}
 
       <hr className='h-1 bg-teal-600 border-teal-600 my-4 mx-6' />
 

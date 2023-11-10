@@ -1,24 +1,17 @@
-import { Address } from '@/modules/search/models/AddressModel'
-import { Booking } from './Booking'
-import { Payment } from './Payment'
-import { Vote } from './Vote'
+import { Role } from '@/types/role'
+import { Sex } from './Sex'
 
 export type User = {
   id: string
-  name: string | null
+  name?: string
   email: string
-  emailVerified: Date | null
-  image: string | null
-  password: string | null
-  // TODO: fix later
-  address: Address
+  emailVerified?: Date
+  image?: string
+  // password?: string
   role: Role
-  firstName: string
-  lastName: string
-  sex: 'MALE' | 'FEMALE' | 'UNKNOWN'
-  birthday: Date
-
-  bookings: Booking[]
-  votes: Vote[]
-  payments: Payment[]
+  firstName?: string
+  lastName?: string
+  sex: Sex
+  birthday?: Date
+  addressId: string
 }

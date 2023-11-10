@@ -5,16 +5,12 @@ import {
   ChevronDownIcon,
   CopyIcon,
   Globe2Icon,
-  GlobeIcon,
-  KeyIcon,
-  LucideIcon,
   MapPinIcon,
   PhoneIcon,
-  WeightIcon,
-  WifiIcon,
 } from 'lucide-react'
 import Rating from 'react-star-ratings'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { AlertDialogHeader } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
@@ -25,17 +21,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { HotelVm } from '@/modules/search/models/HotelModel'
-import { getDistrict, getProvince, getWard } from '../services/AddressService'
+import * as AddressService from '@/modules/address/services/AddressService'
 import ImageCarousel from '@/components/ui/image-carousel'
-import Image from 'next/image'
+import { GOOGLE_SEACH_URL } from '@/shared/constants/api-url'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
 
 interface HotelDetailsProps {
   children: React.ReactNode
   hotel: HotelVm
 }
-
-const GOOGLE_SEACH_URL = 'https://www.google.com/maps/place/'
 
 const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
   const [ward, setWard] = useState<string>('')
@@ -44,13 +38,17 @@ const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
 
   useEffect(() => {
     if (hotel.address) {
-      getProvince(hotel.address?.province).then((data) =>
+      AddressService.getProvince(hotel.address.province!).then((data) =>
         setProvince(data.name)
       )
-      getDistrict(hotel.address.district).then((data) => setDistrict(data.name))
-      getWard(hotel.address.ward).then((data) => setWard(data.name))
+      AddressService.getDistrict(hotel.address.district!).then((data) =>
+        setDistrict(data.name)
+      )
+      AddressService.getWard(hotel.address.ward!).then((data) =>
+        setWard(data.name)
+      )
     }
-  }, [])
+  }, [hotel.address])
 
   return (
     <Dialog>

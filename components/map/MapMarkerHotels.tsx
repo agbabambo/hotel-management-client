@@ -4,11 +4,11 @@ import { FC } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 
 import { MapLazy } from './MapLazy'
-import { Hotel } from '@/modules/search/models/HotelModel'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
 
 interface MapMarkerProps {
   zoom: number
-  hotels: Hotel[]
+  hotels: HotelVm[]
 }
 
 const MapMarkerHotels: FC<MapMarkerProps> = ({ zoom, hotels }) => {

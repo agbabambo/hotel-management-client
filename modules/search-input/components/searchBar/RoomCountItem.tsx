@@ -2,9 +2,8 @@
 
 import { useState } from 'react'
 
-// TODO: refactor this shit icons
-import { Icons } from '@/components/Icons'
 import Counter from './Counter'
+import { CloseIcon } from '@/components/icons/svg/CloseIcon'
 
 type Data = {
   adults: number
@@ -69,7 +68,7 @@ const RoomCountItem: React.FC<RoomCountItemProps> = ({
     >
       <div className='flex gap-2 items-center justify-center'>
         <div className='cursor-pointer' onClick={() => onRemoveRoom(room)}>
-          <Icons.close2 width={20} height={20} fill='#94a3b8' />
+          <CloseIcon width={20} height={20} fill='#94a3b8' />
         </div>
         <div className='whitespace-nowrap'>Room {index + 1}</div>
       </div>

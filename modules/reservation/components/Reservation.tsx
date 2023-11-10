@@ -1,7 +1,7 @@
 'use client'
 
 import { FC, useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 import * as queryConvert from '@/lib/query'
 import SearchInfo from '@/modules/search-input/components/SearchInfo'
@@ -9,12 +9,12 @@ import SearchBar from '@/modules/search-input/components/searchBar/SearchBar'
 import { useLocation } from '@/modules/search-input/context/location'
 import { useDateRange } from '@/modules/search-input/context/dateRange'
 import { useReservation } from '@/modules/search-input/context/reservation'
-import { useFirstLoad } from '@/store/firstLoad'
+import * as ReservationService from '@/modules/reservation/services/ReservationService'
+import * as HotelService from '@/modules/hotel/services/HotelService'
+import { useFirstLoad } from '@/shared/store/useFirstLoad'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
+import { RoomTypeVm } from '@/modules/reservation/models/RoomTypeVm'
 import SelectRoom from './SelectRoom'
-import { RoomType } from '@/shared/types/RoomType'
-import { getRoomTypes } from '../services/ReservationService'
-import { getHotel, getHotels } from '@/modules/search/services/HotelService'
-import { HotelVm } from '@/modules/search/models/HotelModel'
 
 interface ReservationProps {
   userId: string
@@ -25,8 +25,7 @@ const Reservation: FC<ReservationProps> = ({ userId }) => {
 
   const [open, setOpen] = useState<boolean>(false)
 
-  // change to Vm
-  const [roomTypes, setRoomTypes] = useState<RoomType[]>([])
+  const [roomTypes, setRoomTypes] = useState<RoomTypeVm[]>([])
   const [hotel, setHotel] = useState<HotelVm>()
 
   const firstLoad = useFirstLoad()
@@ -43,24 +42,14 @@ const Reservation: FC<ReservationProps> = ({ userId }) => {
     firstLoad.setIsFirstLoad(false)
     location.setLocation(newData.location)
 
-    getHotel(newData.hotel!).then((data) => {
+    HotelService.getHotel(newData.hotel!).then((data) => {
       setHotel(data)
     })
 
-    getRoomTypes(newData.hotel!).then((data) => {
+    ReservationService.getRoomTypes(newData.hotel!).then((data) => {
       setRoomTypes(data)
     })
   }, [dateRange, reservation, firstLoad, location, searchParams])
-
-  // useEffect(() => {
-  //   const hotelId = searchParams.get('hotel')
-  //   if (!hotelId) return
-  //   getRoomTypes(hotelId).then((data) => {
-  //     setRoomTypes(data)
-  //   })
-  // // TODO:
-  //   // getHotels(location.location.code).then()
-  // }, [searchParams])
 
   return (
     <div className='flex flex-col h-full'>

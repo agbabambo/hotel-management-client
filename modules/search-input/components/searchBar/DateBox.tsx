@@ -1,6 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import { format } from 'date-fns'
+import { DateRange } from 'react-day-picker'
 
 import {
   Popover,
@@ -11,14 +13,29 @@ import { cn } from '@/lib/utils'
 import { Calendar } from '@/components/ui/calendar'
 import { useDateRange } from '@/modules/search-input/context/dateRange'
 
-interface DateBoxProps {}
+interface DateBoxProps {
+  setIsCorrectDate: (val: boolean) => void
+}
 
-const DateBox: React.FC<DateBoxProps> = () => {
-  const { date, setDate } = useDateRange()
+const DateBox: React.FC<DateBoxProps> = ({ setIsCorrectDate }) => {
+  const storeDateRange = useDateRange()
+
+  const [date, setDate] = useState<DateRange>(storeDateRange.date)
+
+  const onOpenChange = (open: boolean) => {
+    if (open === false) {
+      if (date.from && date.to) {
+        storeDateRange.setDate(date)
+        setIsCorrectDate(true)
+      } else {
+        setIsCorrectDate(false)
+      }
+    }
+  }
 
   return (
     <div className={cn('grid gap-2')}>
-      <Popover>
+      <Popover onOpenChange={onOpenChange}>
         <PopoverTrigger asChild>
           <div className='flex gap-3 cursor-pointer'>
             <div className='flex gap-3'>

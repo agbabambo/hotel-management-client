@@ -1,10 +1,11 @@
 'use client'
 
 import { FC, useEffect, useState } from 'react'
-import { BookingVm } from '../models/BookingModel'
+import { format } from 'date-fns'
+
+import { BookingVm } from '@/modules/booking/models/BookingModel'
+import * as BookingService from '@/modules/booking/services/BookingService'
 import Client from './client'
-import { format, parseISO } from 'date-fns'
-import { getCurrentUserBooking } from '../services/BookingService'
 import { Column } from './columns'
 
 interface BookingProps {
@@ -16,12 +17,10 @@ const Booking: FC<BookingProps> = ({ userId }) => {
   const [bookings, setBookings] = useState<BookingVm[]>([])
 
   useEffect(() => {
-    getCurrentUserBooking(userId).then((data) => {
+    BookingService.getCurrentUserBooking(userId).then((data) => {
       setBookings(data)
     })
   }, [userId])
-
-  if (!bookings) return
 
   const formattedBookings: Column[] = bookings.map((item) => {
     return {

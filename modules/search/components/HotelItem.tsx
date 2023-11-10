@@ -3,7 +3,6 @@
 import { FC } from 'react'
 import Rating from 'react-star-ratings'
 
-import { HotelVm } from '../models/HotelModel'
 import { Button } from '@/components/ui/button'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import HotelDetails from '@/modules/hotel/components/HotelDetails'
@@ -11,6 +10,7 @@ import { useReservation } from '@/modules/search-input/context/reservation'
 import { useDateRange } from '@/modules/search-input/context/dateRange'
 import { objToQuery } from '@/lib/query'
 import ImageCarousel from '@/components/ui/image-carousel'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
 
 interface HotelItemProps {
   hotel: HotelVm

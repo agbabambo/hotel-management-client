@@ -1,6 +1,5 @@
 'use client'
 
-import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -12,16 +11,11 @@ import {
 } from '@/components/ui/popover'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useOnClickOutside } from '@/hooks/useOnClickOutside'
-import {
-  StoreLocation,
-  useLocation,
-} from '@/modules/search-input/context/location'
-import * as AddressService from '@/modules/hotel/services/AddressService'
-
-const PROVINCE_API_URL = 'https://provinces.open-api.vn/api/p/search/?q='
+import { useLocation } from '@/modules/search-input/context/location'
+import * as AddressService from '@/modules/address/services/AddressService'
 
 interface LocationBoxProps {
-  setIsTyping: (val: boolean) => void
+  setIsTyped: (val: boolean) => void
 }
 
 type Province = {
@@ -29,7 +23,7 @@ type Province = {
   code: number
 }
 
-const LocationBox: React.FC<LocationBoxProps> = ({ setIsTyping }) => {
+const LocationBox: React.FC<LocationBoxProps> = ({ setIsTyped }) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -74,7 +68,7 @@ const LocationBox: React.FC<LocationBoxProps> = ({ setIsTyping }) => {
           ref={inputRef}
           value={comLocation}
           onChange={(e) => {
-            setIsTyping(true)
+            setIsTyped(true)
             setComLocation(e.target.value)
             setLocation({ name: '', code: -1 })
           }}

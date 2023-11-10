@@ -1,7 +1,8 @@
+import Image from 'next/image'
+import { SunriseIcon } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import SearchBar from '@/modules/search-input/components/searchBar/SearchBar'
-import { SunriseIcon } from 'lucide-react'
-import Image from 'next/image'
 
 export default function Home() {
   return (

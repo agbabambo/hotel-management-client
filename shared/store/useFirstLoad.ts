@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 
-interface IFirstLoad {
+interface StoreFirstLoad {
   isFirstLoad: boolean
   setIsFirstLoad: (val: boolean) => void
 }
 
-export const useFirstLoad = create<IFirstLoad>((set) => ({
+export const useFirstLoad = create<StoreFirstLoad>((set) => ({
   isFirstLoad: true,
   setIsFirstLoad: () => set(() => ({ isFirstLoad: false })),
 }))

@@ -20,9 +20,9 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Icons } from '@/components/Icons'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { GoogleIcon } from '@/components/icons/svg/GoogleIcon'
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -267,7 +267,7 @@ const SignUp: FC<SignUpProps> = ({}) => {
         className='w-full text-teal-600 bg-white border-2 border-teal-600 hover:bg-zinc-200'
         onClick={() => loginWithGoogle()}
       >
-        {loading ? null : <Icons.google className='w-6 h-6 mr-2' />}
+        {loading ? null : <GoogleIcon className='w-6 h-6 mr-2' />}
         Google
       </Button>
 

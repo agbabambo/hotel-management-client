@@ -1,18 +1,18 @@
 'use client'
 
 import React, { FC } from 'react'
+import Image from 'next/image'
 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { HotelVm } from '@/modules/search/models/HotelModel'
 import ImageCarousel from '@/components/ui/image-carousel'
-import { RoomType } from '@/shared/types/RoomType'
-import Image from 'next/image'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
+import { RoomTypeVm } from '@/modules/reservation/models/RoomTypeVm'
 
 interface RoomDetailsProps {
   children: React.ReactNode
-  roomType: RoomType
-  hotel: HotelVm
+  roomType: RoomTypeVm
+  hotel?: HotelVm
 }
 
 const RoomDetails: FC<RoomDetailsProps> = ({ children, roomType, hotel }) => {
@@ -20,7 +20,6 @@ const RoomDetails: FC<RoomDetailsProps> = ({ children, roomType, hotel }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      {/* TODO: fix minwidht on small vw */}
       <DialogContent className='min-w-[400px] md:min-w-[1000px] p-0 rounded-md overflow-hidden flex outline-none'>
         <div className='w-1/2'>
           <div>

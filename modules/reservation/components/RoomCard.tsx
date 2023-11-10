@@ -6,16 +6,15 @@ import { Check, PercentIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { RoomType } from '@/shared/types/RoomType'
-import { Discount } from '@/shared/types/Discount'
 import RoomDetails from './RoomDetails'
-import { HotelVm } from '@/modules/search/models/HotelModel'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
+import { RoomTypeVm } from '../models/RoomTypeVm'
 
 interface RoomProps {
-  roomType: RoomType & { discount?: Discount | null }
+  roomType: RoomTypeVm
   isSelected: boolean
   handleSelectRoom: (roomTypeId: string) => void
-  hotel: HotelVm
+  hotel?: HotelVm
 }
 
 const RoomCard: FC<RoomProps> = ({

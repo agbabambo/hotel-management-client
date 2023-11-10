@@ -5,6 +5,8 @@ import { DateRange } from 'react-day-picker'
 import { RoomReservationInfo } from '@/modules/search-input/models/RoomReservation'
 import { Location } from '@/modules/search-input/context/location'
 
+// this is so stupid
+
 const roomReservationInfoToQueryStr = (
   roomsInfo: RoomReservationInfo[]
 ): string => {

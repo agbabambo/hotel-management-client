@@ -1,5 +1,5 @@
 import axios from '@/lib/axios'
-import { HotelVm } from '../models/HotelModel'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
 
 export const getHotels = async (provinceCode: number): Promise<HotelVm[]> => {
   const res = await axios.get('/api/hotels?&p=' + provinceCode)
@@ -9,8 +9,6 @@ export const getHotels = async (provinceCode: number): Promise<HotelVm[]> => {
   return Promise.reject(res)
 }
 
-// TODO: okay, soon
-// soon what? i forgot, damn
 export const getHotel = async (hotelId: string): Promise<HotelVm> => {
   const res = await axios.get('/api/hotels/' + hotelId)
 

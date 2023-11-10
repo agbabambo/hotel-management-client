@@ -1,35 +1,35 @@
 'use client'
 
-import { AspectRatio } from '@/components/ui/aspect-ratio'
-import { Button } from '@/components/ui/button'
-import HotelDetails from '@/modules/hotel/components/HotelDetails'
-import {
-  getDistrict,
-  getProvince,
-  getWard,
-} from '@/modules/hotel/services/AddressService'
-import { HotelVm } from '@/modules/search/models/HotelModel'
 import { CopyIcon } from 'lucide-react'
 import Image from 'next/image'
 import { FC, useEffect, useState } from 'react'
 
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { Button } from '@/components/ui/button'
+import HotelDetails from '@/modules/hotel/components/HotelDetails'
+import * as AddressService from '@/modules/address/services/AddressService'
+import { HotelVm } from '@/modules/hotel/models/HotelModel'
+
 interface HotelInfoProps {
-  hotel: HotelVm
+  hotel?: HotelVm
 }
 
 const HotelInfo: FC<HotelInfoProps> = ({ hotel }) => {
-  // TODO: make this a seperate component
   const [ward, setWard] = useState<string>('')
   const [district, setDistrict] = useState<string>('')
   const [province, setProvince] = useState<string>('')
 
   useEffect(() => {
     if (hotel && hotel.address) {
-      getProvince(hotel.address?.province).then((data) =>
+      AddressService.getProvince(hotel.address.province!).then((data) =>
         setProvince(data.name)
       )
-      getDistrict(hotel.address.district).then((data) => setDistrict(data.name))
-      getWard(hotel.address.ward).then((data) => setWard(data.name))
+      AddressService.getDistrict(hotel.address.district!).then((data) =>
+        setDistrict(data.name)
+      )
+      AddressService.getWard(hotel.address.ward!).then((data) =>
+        setWard(data.name)
+      )
     }
   }, [])
 

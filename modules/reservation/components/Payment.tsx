@@ -1,9 +1,5 @@
 'use client'
 
-import { toast } from '@/components/ui/use-toast'
-import { useDateRange } from '@/modules/search-input/context/dateRange'
-import { useReservation } from '@/modules/search-input/context/reservation'
-import { RoomType } from '@/shared/types/RoomType'
 import {
   CreateOrderActions,
   CreateOrderData,
@@ -15,11 +11,17 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
 
+import { toast } from '@/components/ui/use-toast'
+import { useDateRange } from '@/modules/search-input/context/dateRange'
+import { useReservation } from '@/modules/search-input/context/reservation'
+import { RoomTypeVm } from '@/modules/reservation/models/RoomTypeVm'
+
 interface PaymentProps {
-  roomTypes: RoomType[]
+  roomTypes: RoomTypeVm[]
   userId: string
 }
 
+// TODO: later
 const Payment: FC<PaymentProps> = ({ roomTypes, userId }) => {
   const reservation = useReservation()
   const dateRange = useDateRange()
@@ -45,6 +47,7 @@ const Payment: FC<PaymentProps> = ({ roomTypes, userId }) => {
       })
       return res.data.id
     } catch (err) {
+      toast({ variant: 'destructive', title: 'Something went wrong' })
       console.log('[PAYMENT_CREATE_ORDER]', err)
     }
   }
@@ -65,10 +68,10 @@ const Payment: FC<PaymentProps> = ({ roomTypes, userId }) => {
 
       console.log('onApprove_res', res)
 
-      toast({ title: 'Completed payment' })
       router.push(`/${userId}/booking`)
       router.refresh()
     } catch (err) {
+      toast({ variant: 'destructive', title: 'Something went wrong' })
       console.log('[PAYMENT_ON_APPROVE]', err)
     }
   }

@@ -7,6 +7,7 @@ import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useRouter } from 'next/navigation'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar2'
@@ -27,11 +28,9 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
-import { getUser } from '@/modules/user/services/getUser'
+import * as UserService from '@/modules/user/services/UserService'
 import { User } from '@/shared/types/User'
-import { zodResolver } from '@hookform/resolvers/zod'
 import axios from '@/lib/axios'
-import { Skeleton } from '@/components/ui/skeleton'
 
 interface ProfileProps {
   userAuth: UserAuth
@@ -53,7 +52,7 @@ const Profile: FC<ProfileProps> = ({ userAuth }) => {
   const [user, setUser] = useState<User>()
 
   useEffect(() => {
-    getUser(userAuth.id).then((data) => {
+    UserService.getUser(userAuth.id).then((data) => {
       console.log('fetched-birthday', data.birthday)
 
       setUser(data)
@@ -85,7 +84,7 @@ const Profile: FC<ProfileProps> = ({ userAuth }) => {
     try {
       console.log('axios-post', data)
 
-      await axios.post(`/users/${user?.id}`, data)
+      await axios.post(`/api/users/${user?.id}`, data)
 
       router.refresh()
       toast({ description: 'Updated user profile' })
@@ -97,9 +96,6 @@ const Profile: FC<ProfileProps> = ({ userAuth }) => {
       })
     }
   }
-
-  // TODO: Loading skeleton instead
-  if (!user) return
 
   return (
     <div>
@@ -248,19 +244,6 @@ const Profile: FC<ProfileProps> = ({ userAuth }) => {
                             Prefer not to say
                           </FormLabel>
                         </FormItem>
-
-                        {/* <div className='flex items-center space-x-2'>
-                          <RadioGroupItem value='MALE' id='r1' />
-                          <Label htmlFor='r1'>Male</Label>
-                        </div>
-                        <div className='flex items-center space-x-2'>
-                          <RadioGroupItem value='FEMALE' id='r2' />
-                          <Label htmlFor='r2'>Female</Label>
-                        </div>
-                        <div className='flex items-center space-x-2'>
-                          <RadioGroupItem value='UNKNOWN' id='r3' />
-                          <Label htmlFor='r3'>Prefer not to say</Label>
-                        </div> */}
                       </RadioGroup>
                     </FormControl>
                   </FormItem>

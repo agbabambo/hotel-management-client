@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react'
 import { User as UserAuth } from 'next-auth'
 import Link from 'next/link'
 import { signOut } from 'next-auth/react'
+import { LogOutIcon } from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -13,9 +14,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { User } from '@/shared/types/User'
-import { getUser } from '../services/getUser'
 import UserAvatar from './UserAvatar'
-import { LogOutIcon } from 'lucide-react'
+import * as UserService from '@/modules/user/services/UserService'
 
 interface UserAccountNavProps {
   userAuth: UserAuth
@@ -25,7 +25,7 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ userAuth }) => {
   const [user, setUser] = useState<User>()
 
   useEffect(() => {
-    getUser(userAuth.id).then((data) => setUser(data))
+    UserService.getUser(userAuth.id).then((data) => setUser(data))
   }, [userAuth])
 
   if (!user) return
