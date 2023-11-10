@@ -82,8 +82,6 @@ const Profile: FC<ProfileProps> = ({ userAuth }) => {
 
   const onSubmit = async (data: UserInfoFormValues) => {
     try {
-      console.log('axios-post', data)
-
       await axios.post(`/api/users/${user?.id}`, data)
 
       router.refresh()

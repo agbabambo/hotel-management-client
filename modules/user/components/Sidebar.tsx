@@ -2,7 +2,12 @@
 
 import { FC, useEffect, useState } from 'react'
 import { User as UserAuth } from 'next-auth'
-import { CalendarRangeIcon, LucideIcon, UserIcon } from 'lucide-react'
+import {
+  CalendarRangeIcon,
+  LucideIcon,
+  MailPlusIcon,
+  UserIcon,
+} from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
@@ -46,6 +51,12 @@ const Sidebar: FC<SidebarProps> = ({ userAuth }) => {
       label: 'Booking Room',
       active: pathname === '/user/booking',
       Icon: CalendarRangeIcon,
+    },
+    {
+      href: '/user/feedback',
+      label: 'Feedback',
+      active: pathname === '/user/feedback',
+      Icon: MailPlusIcon,
     },
   ]
 

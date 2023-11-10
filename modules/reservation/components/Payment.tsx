@@ -68,7 +68,7 @@ const Payment: FC<PaymentProps> = ({ roomTypes, userId }) => {
 
       console.log('onApprove_res', res)
 
-      router.push(`/${userId}/booking`)
+      router.push(`/user/booking`)
       router.refresh()
     } catch (err) {
       toast({ variant: 'destructive', title: 'Something went wrong' })

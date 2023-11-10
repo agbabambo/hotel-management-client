@@ -1,1 +1,1 @@
-type Role = 'MEMBER' | 'STAFF' | 'ADMIN'
+type Role = 'CUSTOMER' | 'STAFF' | 'ADMIN'
