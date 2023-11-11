@@ -14,10 +14,12 @@ import Map from '@/modules/search/components/Map'
 import { useFirstLoad } from '@/shared/store/useFirstLoad'
 import { HotelVm } from '@/modules/hotel/models/HotelModel'
 import * as HotelService from '@/modules/hotel/services/HotelService'
+import { useOrigin } from '@/hooks/useOrigin'
 
 interface SearchPageProps {}
 
 const SearchPage: FC<SearchPageProps> = () => {
+  useOrigin()
   const [open, setOpen] = useState<boolean>(false)
 
   const [hotels, setHotels] = useState<HotelVm[]>([])

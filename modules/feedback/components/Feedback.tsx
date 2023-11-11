@@ -49,6 +49,7 @@ const Feedback: FC<FeedbackProps> = ({ userId }) => {
     try {
       await axios.post('/api/feedbacks', { content: data.content, userId })
       setChanged((v) => !v)
+      form.reset()
       router.refresh()
     } catch (err) {
       toast({

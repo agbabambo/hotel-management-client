@@ -11,6 +11,7 @@ import { useDateRange } from '@/modules/search-input/context/dateRange'
 import { objToQuery } from '@/lib/query'
 import ImageCarousel from '@/components/ui/image-carousel'
 import { HotelVm } from '@/modules/hotel/models/HotelModel'
+import { useLocation } from '@/modules/search-input/context/location'
 
 interface HotelItemProps {
   hotel: HotelVm
@@ -19,6 +20,7 @@ interface HotelItemProps {
 const HotelItem: FC<HotelItemProps> = ({ hotel }) => {
   const reservationInfo = useReservation()
   const dateRange = useDateRange()
+  const location = useLocation()
 
   const handleClickVewRate = () => {
     const url = objToQuery({
@@ -26,6 +28,7 @@ const HotelItem: FC<HotelItemProps> = ({ hotel }) => {
       date: dateRange.date,
       roomResInfo: reservationInfo.rooms,
       hotel: hotel.id,
+      location: location.location,
     })
 
     window.open(url, '_blank')

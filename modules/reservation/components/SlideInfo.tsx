@@ -47,8 +47,6 @@ const SlideInfo: FC<SlideInfoProps> = ({ slide, setSlide, totalSlide }) => {
             )
           }
 
-          console.log('slide-currentslite', slide === currentSlide)
-
           return (
             <li key={i} className='inline-block mr-3'>
               <Button

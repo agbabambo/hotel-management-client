@@ -25,6 +25,7 @@ import * as AddressService from '@/modules/address/services/AddressService'
 import ImageCarousel from '@/components/ui/image-carousel'
 import { GOOGLE_SEACH_URL } from '@/shared/constants/api-url'
 import { HotelVm } from '@/modules/hotel/models/HotelModel'
+import { useOrigin } from '@/hooks/useOrigin'
 
 interface HotelDetailsProps {
   children: React.ReactNode
@@ -35,6 +36,8 @@ const HotelDetails: FC<HotelDetailsProps> = ({ children, hotel }) => {
   const [ward, setWard] = useState<string>('')
   const [district, setDistrict] = useState<string>('')
   const [province, setProvince] = useState<string>('')
+
+  useOrigin()
 
   useEffect(() => {
     if (hotel.address) {

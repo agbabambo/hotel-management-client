@@ -61,17 +61,17 @@ const SearchInfo: FC<SearchInfoProps> = ({ onOpen }) => {
         </div>
       </div>
 
-      {/* RoomGuestInfo */}
       <div className='flex items-center gap-2 border-neutral-300 border-r-[1px] pr-3 h-full text-sm'>
         <PeopleIcon width={24} height={24} />
         {renderPluralNumber(reservation.rooms.length, 'room')} for{' '}
-        {renderPluralNumber(adults, 'adult')} and{' '}
-        {renderPluralNumber(kids, 'kid')}
+        {renderPluralNumber(adults, 'adult')}
+        {kids > 0 && `and ${renderPluralNumber(kids, 'kid')}`}
       </div>
 
-      <Button className='underline' variant='link' onClick={onOpen}>
+      {/* TODO: currently have to disable this feature because change search-data state will break the web, fix later */}
+      {/* <Button className='underline' variant='link' onClick={onOpen}>
         Edit search
-      </Button>
+      </Button> */}
     </div>
   )
 }

@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { signIn } from 'next-auth/react'
-import axios from 'axios'
 import Link from 'next/link'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -23,6 +22,7 @@ import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { GoogleIcon } from '@/components/icons/svg/GoogleIcon'
+import axios from '@/lib/axios'
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -87,20 +87,23 @@ const SignUp: FC<SignUpProps> = ({}) => {
   const onSubmit = async (data: SignUpFormValues) => {
     try {
       setLoading(true)
-      await axios.post('/api/register', {
-        email: data.email,
-        password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        address: data.address,
-        phoneNumber: data.phoneNumber,
-      })
-      router.push('/sign-in')
+      // await axios.post('/api/register', {
+      //   email: data.email,
+      //   password: data.password,
+      //   firstName: data.firstName,
+      //   lastName: data.lastName,
+      //   address: data.address,
+      //   phoneNumber: data.phoneNumber,
+      // })
+      const shit = await axios.get('/api/hotels')
+      console.log(shit)
+      router.push('/')
       router.refresh()
     } catch (err: any) {
+      console.log(err)
       toast({
         variant: 'destructive',
-        description: err.response.data,
+        description: 'Something went wrong, please try again',
       })
     } finally {
       setLoading(false)
@@ -253,6 +256,7 @@ const SignUp: FC<SignUpProps> = ({}) => {
               disabled={loading}
               size='sm'
               className={cn(buttonVariants({ variant: 'teal' }), 'col-span-4')}
+              type='submit'
             >
               Create
             </Button>

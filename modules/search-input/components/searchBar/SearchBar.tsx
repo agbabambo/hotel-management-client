@@ -26,6 +26,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose, variant }) => {
   const location = useLocation()
 
   // TODO: yeah
+  // yeah what? damn it, forgot again, u stupid
   const [isTyped, setIsTyped] = useState<boolean>(true)
   const [isCorrectDate, setIsCorrectDate] = useState<boolean>(true)
 
