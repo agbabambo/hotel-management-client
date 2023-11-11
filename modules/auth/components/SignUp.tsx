@@ -87,17 +87,17 @@ const SignUp: FC<SignUpProps> = ({}) => {
   const onSubmit = async (data: SignUpFormValues) => {
     try {
       setLoading(true)
-      // await axios.post('/api/register', {
-      //   email: data.email,
-      //   password: data.password,
-      //   firstName: data.firstName,
-      //   lastName: data.lastName,
-      //   address: data.address,
-      //   phoneNumber: data.phoneNumber,
-      // })
-      const shit = await axios.get('/api/hotels')
-      console.log(shit)
-      router.push('/')
+      console.log(data)
+      await axios.post('/api/register', {
+        email: data.email,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        address: data.address,
+        phoneNumber: data.phoneNumber,
+      })
+
+      router.push('/sign-in')
       router.refresh()
     } catch (err: any) {
       console.log(err)

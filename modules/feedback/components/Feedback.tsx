@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 
 import { FeedbackVm } from '@/modules/feedback/models/FeedbackVm'
 import * as FeedbackService from '@/modules/feedback/services/FeedbackService'
@@ -19,7 +20,6 @@ import {
 } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
 
 interface FeedbackProps {
   userId: string
@@ -35,7 +35,6 @@ const Feedback: FC<FeedbackProps> = ({ userId }) => {
   const router = useRouter()
 
   const [changed, setChanged] = useState(false)
-
   const [feedbacks, setFeedbacks] = useState<FeedbackVm[]>([])
 
   const form = useForm<FormValues>({

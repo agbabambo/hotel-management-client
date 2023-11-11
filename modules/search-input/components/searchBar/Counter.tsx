@@ -50,7 +50,7 @@ const Counter: React.FC<CounterProps> = ({
           <PlusIcon
             width={20}
             className='bg-white '
-            // fill={value !== max ? '#020617' : '#94a3b8'}
+            fill={value !== max ? '#020617' : '#94a3b8'}
           />
         </button>
       </div>
